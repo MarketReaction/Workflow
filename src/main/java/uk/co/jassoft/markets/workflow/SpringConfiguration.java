@@ -1,5 +1,6 @@
 package uk.co.jassoft.markets.workflow;
 
+import org.springframework.beans.factory.annotation.Value;
 import uk.co.jassoft.markets.BaseSpringConfiguration;
 import com.spotify.docker.client.DefaultDockerClient;
 import com.spotify.docker.client.DockerCertificateException;
