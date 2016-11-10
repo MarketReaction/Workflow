@@ -106,6 +106,8 @@ public abstract class AbstractDockerScheduler {
                     LOG.error("Failed to start Container [{}]", image);
                 }
             }
+
+            docker.waitContainer(id);
         }
         catch (final Exception exception) {
             LOG.error(exception.getLocalizedMessage(), exception);

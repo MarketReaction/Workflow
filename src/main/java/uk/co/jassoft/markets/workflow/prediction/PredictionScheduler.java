@@ -26,7 +26,7 @@ public class PredictionScheduler extends AbstractDockerScheduler {
         scheduleContainer(PREDICTOR_IMAGE, new ArrayList<String>(), 100l, PredictorType.PredictionValidator.name());
     }
 
-    @JmsListener(destination = "SentimentUpdated", concurrency = "1")
+    @JmsListener(destination = "SentimentUpdated", concurrency = "5")
     public void onMessage(Message message) throws JMSException {
 
         if ( message instanceof TextMessage) {

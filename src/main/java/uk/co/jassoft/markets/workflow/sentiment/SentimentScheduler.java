@@ -20,7 +20,7 @@ public class SentimentScheduler extends AbstractDockerScheduler {
 
     private static final Logger LOG = LoggerFactory.getLogger(SentimentScheduler.class);
 
-    @JmsListener(destination = "MatchFound")
+    @JmsListener(destination = "MatchFound", concurrency = "5")
     public void onMessage(final Message message) throws JMSException {
         final Date start = new Date();
         if (message instanceof TextMessage) {
