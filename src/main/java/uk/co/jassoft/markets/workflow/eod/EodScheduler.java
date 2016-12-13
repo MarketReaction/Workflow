@@ -50,6 +50,8 @@ public class EodScheduler extends AbstractDockerScheduler {
         if (message instanceof ObjectMessage) {
             final ObjectMessage objectMessage = (ObjectMessage) message;
 
+            message.acknowledge();
+
             // TODO: Forbidden class org.apache.commons.lang3.tuple.ImmutablePair!
             // This class is not trusted to be serialized as ObjectMessage payload.
             // Please take a look at http://activemq.apache.org/objectmessage.html for more information on how to configure trusted classes.

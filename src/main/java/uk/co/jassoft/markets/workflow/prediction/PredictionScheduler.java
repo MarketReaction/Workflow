@@ -32,6 +32,8 @@ public class PredictionScheduler extends AbstractDockerScheduler {
         if ( message instanceof TextMessage) {
             final TextMessage textMessage = (TextMessage) message;
 
+            message.acknowledge();
+
             scheduleContainer(PREDICTOR_IMAGE, new ArrayList<String>(), 100l, PredictorType.PredictionGenerator.name(), textMessage.getText());
         }
     }
