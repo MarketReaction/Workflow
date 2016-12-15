@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -40,7 +41,7 @@ public abstract class AbstractDockerScheduler {
     @Autowired
     private DockerClient docker;
 
-    protected void scheduleContainer(String image, List<String> envs, Long memLimit, String... cmd) {
+    protected void scheduleContainer(String image, final List<String> envs, Long memLimit, String... cmd) {
         try {
 
             Optional<Container> containerOptional = docker.listContainers(DockerClient.ListContainersParam.allContainers())
@@ -65,17 +66,20 @@ public abstract class AbstractDockerScheduler {
             final HostConfig hostConfig = HostConfig.builder()
                     .build();
 
-            envs.add("ACTIVEMQ_PORT_61616_TCP_ADDR=" + activeMQHost);
-            envs.add("ACTIVEMQ_PORT_61616_TCP_PORT=" + activeMQPort);
-            envs.add("MONGO_PORT_27017_TCP_ADDR=" + mongoDbHost);
-            envs.add("MONGO_PORT_27017_TCP_PORT=" + mongoDbPort);
+            List<String> containerEnvs = new ArrayList<>();
 
+            containerEnvs.add("ACTIVEMQ_PORT_61616_TCP_ADDR=" + activeMQHost);
+            containerEnvs.add("ACTIVEMQ_PORT_61616_TCP_PORT=" + activeMQPort);
+            containerEnvs.add("MONGO_PORT_27017_TCP_ADDR=" + mongoDbHost);
+            containerEnvs.add("MONGO_PORT_27017_TCP_PORT=" + mongoDbPort);
+
+            containerEnvs.addAll(envs);
 
             // Create container with exposed ports
             final ContainerConfig containerConfig = ContainerConfig.builder()
                     .hostConfig(hostConfig)
                     .image(image + ":" + version)
-                    .env(envs)
+                    .env(containerEnvs)
                     .memory(memLimit * 1024 * 1024)
                     .cmd(cmd)
                     .build();
