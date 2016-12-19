@@ -1,7 +1,9 @@
 package uk.co.jassoft.markets.workflow;
 
 import com.spotify.docker.client.DockerClient;
-import com.spotify.docker.client.messages.*;
+import com.spotify.docker.client.messages.ContainerConfig;
+import com.spotify.docker.client.messages.ContainerCreation;
+import com.spotify.docker.client.messages.HostConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +11,6 @@ import org.springframework.beans.factory.annotation.Value;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 /**
  * Created by jonshaw on 02/09/2016.
@@ -44,24 +45,24 @@ public abstract class AbstractDockerScheduler {
     protected void scheduleContainer(String image, final List<String> envs, Long memLimit, String... cmd) {
         try {
 
-            Optional<Container> containerOptional = docker.listContainers(DockerClient.ListContainersParam.allContainers())
-                    .stream()
-                    .filter(container -> container.image().contains("workflow"))
-                    .filter(container1 -> container1.image().contains(version))
-                    .findFirst();
+//            Optional<Container> containerOptional = docker.listContainers(DockerClient.ListContainersParam.allContainers())
+//                    .stream()
+//                    .filter(container -> container.image().contains("workflow"))
+//                    .filter(container1 -> container1.image().contains(version))
+//                    .findFirst();
+//
+//            if(!containerOptional.isPresent()) {
+//                throw new Exception("No Workflow Container");
+//            }
 
-            if(!containerOptional.isPresent()) {
-                throw new Exception("No Workflow Container");
-            }
+//            Optional<Network> networkOptional = docker.listNetworks().stream()
+//                    .filter(network -> network.driver().equals("overlay"))
+//                    .filter(network1 -> network1.containers().containsKey(containerOptional.get().id()))
+//                    .findFirst();
 
-            Optional<Network> networkOptional = docker.listNetworks().stream()
-                    .filter(network -> network.driver().equals("overlay"))
-                    .filter(network1 -> network1.containers().containsKey(containerOptional.get().id()))
-                    .findFirst();
-
-            if(!containerOptional.isPresent()) {
-                throw new Exception("No Overlay Network");
-            }
+//            if(!containerOptional.isPresent()) {
+//                throw new Exception("No Overlay Network");
+//            }
 //
             final HostConfig hostConfig = HostConfig.builder()
                     .build();
@@ -88,7 +89,7 @@ public abstract class AbstractDockerScheduler {
             final String id = creation.id();
 
             // Connect to network
-            docker.connectToNetwork(id, networkOptional.get().id());
+//            docker.connectToNetwork(id, networkOptional.get().id());
 
             int attempts = 5;
 
