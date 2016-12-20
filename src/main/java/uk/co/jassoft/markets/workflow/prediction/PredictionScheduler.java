@@ -12,6 +12,7 @@ import javax.jms.JMSException;
 import javax.jms.Message;
 import javax.jms.TextMessage;
 import java.util.ArrayList;
+import org.apache.activemq.command.ActiveMQBytesMessage;
 
 /**
  * Created by jonshaw on 02/09/2016.
@@ -35,8 +36,11 @@ public class PredictionScheduler extends AbstractDockerScheduler {
             message.acknowledge();
 
             scheduleContainer(PREDICTOR_IMAGE, new ArrayList<String>(), 100l, PredictorType.PredictionGenerator.name(), textMessage.getText());
+        } else if ( message instanceof ActiveMQBytesMessage) {
+            final TextMessage textMessage = (TextMessage) message;
+            LOG.info("Message on Queue SentimentUpdated is not of type 'TextMessage' but is of type [{}] Test Content [{}]", message.getClass(), message.readUTF());
         } else {
-            LOG.info("Message on Queue SentimentUpdated is not of type 'TextMessage' but is of type [{}] Test Content [{}]", message.getClass(), new String(message));
+            LOG.info("Message on Queue SentimentUpdated is of unhandled type [{}]", message.getClass());
         }
     }
 
