@@ -44,12 +44,12 @@ public class PredictionScheduler extends AbstractDockerScheduler {
 
             text = new String(bytesMessage.getContent().data);
 
-            LOG.info("Message on Queue SentimentUpdated is not of type 'TextMessage' but is of type [{}] Test Content [{}]", message.getClass(), text);
-
             message.acknowledge();
 
         } else {
             LOG.info("Message on Queue SentimentUpdated is of unhandled type [{}]", message.getClass());
+
+            return;
         }
 
         scheduleContainer(PREDICTOR_IMAGE, new ArrayList<String>(), 100l, PredictorType.PredictionGenerator.name(), text);
