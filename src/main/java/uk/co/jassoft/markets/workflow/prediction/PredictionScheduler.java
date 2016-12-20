@@ -37,8 +37,8 @@ public class PredictionScheduler extends AbstractDockerScheduler {
 
             scheduleContainer(PREDICTOR_IMAGE, new ArrayList<String>(), 100l, PredictorType.PredictionGenerator.name(), textMessage.getText());
         } else if ( message instanceof ActiveMQBytesMessage) {
-            final TextMessage textMessage = (TextMessage) message;
-            LOG.info("Message on Queue SentimentUpdated is not of type 'TextMessage' but is of type [{}] Test Content [{}]", message.getClass(), message.readUTF());
+            final ActiveMQBytesMessage bytesMessage = (ActiveMQBytesMessage) message;
+            LOG.info("Message on Queue SentimentUpdated is not of type 'TextMessage' but is of type [{}] Test Content [{}]", message.getClass(), bytesMessage.readUTF());
         } else {
             LOG.info("Message on Queue SentimentUpdated is of unhandled type [{}]", message.getClass());
         }
