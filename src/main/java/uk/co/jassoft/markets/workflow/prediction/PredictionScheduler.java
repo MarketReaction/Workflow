@@ -35,14 +35,14 @@ public class PredictionScheduler extends AbstractDockerScheduler {
         if ( message instanceof TextMessage) {
             final TextMessage textMessage = (TextMessage) message;
 
-            text = textMessage.getText()
+            text = textMessage.getText();
 
             message.acknowledge();
 
         } else if ( message instanceof ActiveMQBytesMessage) {
             final ActiveMQBytesMessage bytesMessage = (ActiveMQBytesMessage) message;
 
-            text = new String(bytesMessage.getContent().data)
+            text = new String(bytesMessage.getContent().data);
 
             LOG.info("Message on Queue SentimentUpdated is not of type 'TextMessage' but is of type [{}] Test Content [{}]", message.getClass(), text);
 
