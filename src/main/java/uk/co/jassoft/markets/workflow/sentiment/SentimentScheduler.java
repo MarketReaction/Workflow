@@ -33,7 +33,7 @@ public class SentimentScheduler extends AbstractDockerScheduler {
         envs.add("SENTIMENT_API_REST_URL=" + sentimentUrlRestUrl);
     }
 
-    @JmsListener(destination = "MatchFound")
+    @JmsListener(destination = "MatchFound", concurrency = "10")
     public void onMessage(final Message message) throws JMSException {
         final Date start = new Date();
         if (message instanceof TextMessage) {
