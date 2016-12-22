@@ -41,8 +41,6 @@ public class SentimentScheduler extends AbstractDockerScheduler {
 
             message.acknowledge();
 
-            LOG.info("Triggering Senitment as MatchFound");
-
             scheduleContainer(SENTIMENT_IMAGE, envs, 100l, textMessage.getText());
         }
     }
