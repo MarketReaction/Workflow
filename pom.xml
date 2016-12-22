@@ -59,6 +59,11 @@
             <artifactId>CommonFunctions</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>com.joestelmach</groupId>
+            <artifactId>natty</artifactId>
+        </dependency>
+
         <!--<dependency>-->
             <!--<groupId>org.apache.commons</groupId>-->
             <!--<artifactId>commons-lang3</artifactId>-->
