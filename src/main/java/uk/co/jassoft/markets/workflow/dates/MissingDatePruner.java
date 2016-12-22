@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Import;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Component;
 import uk.co.jassoft.markets.datamodel.story.date.MissingDateFormat;
 import uk.co.jassoft.markets.repository.MissingDateFormatRepository;
 import uk.co.jassoft.markets.utils.article.ContentGrabber;
@@ -13,7 +14,7 @@ import java.util.Date;
 /**
  * Created by jonshaw on 22/01/15.
  */
-//@Component
+@Component
 @Import({ContentGrabber.class})
 public class MissingDatePruner {
 
